@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "api" : "json-server --port 3000 --watch ./src/data/db.json"
+    "api": "json-server --port 3000 --watch ./src/data/db.json"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/vue-fontawesome": "^2.0.10",
     "core-js": "^3.8.3",
+    "jquery": "^3.7.1",
     "json-server": "^1.0.0-alpha.23",
     "vue": "^2.6.14"
   },
