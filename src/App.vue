@@ -17,9 +17,9 @@
             <thead class="table-active">
               <tr class="text-center">
 
-                <th>ID</th>
+                <th>No.</th>
                 <th>Nombre</th>
-                <th>Alias </th>
+                <th>Nombre de Usuario</th>
 
               </tr>
             </thead>
@@ -42,7 +42,7 @@
             <thead class="table-active">
               <tr class="text-center">
 
-                <th>ID</th>
+                <th>No.</th>
                 <th>Nombre</th>
                 <th>Estado</th>
                 <th>Acciones</th>
@@ -73,9 +73,6 @@
       </div>
 
     </div>
-
-
-
 
   </div>
 </template>
