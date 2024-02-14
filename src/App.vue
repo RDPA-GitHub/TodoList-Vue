@@ -1,16 +1,29 @@
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
-      <Todo msg="Listado" />
+      <Todo msg="Listados" />
       <div class="d-flex align-items-center mt-2">
         <button title="Mostrando Usuarios Estáticos" class="ms-3"
-          :class="['btn', datos.length > 0 ? 'btn-secondary' : 'btn-success', 'fw-bold']" @click="Actualizacion()">
+          :class="['btn', datos.length > 0 ? 'btn-secondary' : 'btn-success', 'fw-bold']" @click="ListaOculta()">
           ⚡
         </button>
       </div>
     </div>
 
     <div class="container">
+
+      <div class="row mt-3">
+        <div class="col-md-12">
+
+          <div class="d-flex justify-content-center">
+            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-50"
+              v-model="Tarea.title" />
+          </div>
+
+        </div>
+      </div>
+
+      <!-- JSON API -->
       <div class="row mt-3  ">
         <div class="col-md-12 table-responsive">
           <table v-if="datos.length > 0" class="table table-dark table-striped">
@@ -36,6 +49,7 @@
         </div>
       </div>
 
+      <!-- Listado de JSON Server -->
       <div class="row mt-3  ">
         <div class="col-md-12 table-responsive">
           <table class="table table-dark table-striped">
@@ -52,7 +66,7 @@
             <tbody>
               <tr class="text-center" v-for="(value, index) in usuarios" :key="index">
 
-                <td>{{ value.id }}</td>
+                <td>{{ index + 1 }}</td>
                 <td>{{ value.title }}</td>
                 <td :class="[value.active ? 'text-success fw-bold' : 'text-danger fw-bold']">
                   {{ value.active ? 'Activo' : 'Inactivo' }}
@@ -60,11 +74,11 @@
 
                 <td>
                   <button class="btn btn-outline-warning me-1 fw-bold" data-bs-toggle="modal"
-                    :data-bs-target="`#editModal-${index}`" @click="openModal">
+                    :data-bs-target="`#editModal-${index}`" @click="openModal(index)">
                     Edit
                   </button>
                   <button class="btn btn-outline-danger ms-1 fw-bold" data-bs-toggle="modal"
-                    :data-bs-target="`#deleteModal-${index}`" @click="openModal">
+                    :data-bs-target="`#deleteModal-${index}`" @click="openModal(index)">
                     Delete
                   </button>
                 </td>
@@ -77,41 +91,48 @@
 
     </div>
 
-    <!-- Modal -->
-    <div v-for="(value, index) in usuarios" :key="index">
+    <div v-for="(data, index) in usuarios" :key="index">
+      <!-- Modal Editar -->
       <div class="modal fade" :id="`editModal-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Edit</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Editar</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="Actualizar()"></button>
             </div>
             <div class="modal-body">
-              Edit {{  index+1 }} {{ variable }}
+
+              <div class="d-flex justify-content-center">
+            <input placeholder="ingrese su tarea aquí" type="text" class="form-control w-50"
+              v-model="data.title" />
+          </div>
+
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="Actualizar()">Cerrar</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                @click="edicion(data.id, data.title)">Editar</button>
             </div>
           </div>
         </div>
       </div>
-      <!-- otro -->
-      <div class="modal fade" :id="`deleteModal-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+      <!-- Modal Delete -->
+      <div class="modal fade" :id="`deleteModal-${index}`" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Delete</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="Actualizar()"></button>
             </div>
-            <div class="modal-body">
-              Delete {{  index }}
+            <div class="modal-body text-center">
+              Estas seguro que quieres borrar <strong class="text-danger">"{{ data.title }}"</strong>?
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Understood</button>
+              <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal" @click="Borrar(data.id)">Borrar</button>
+              <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal" @click="Actualizar()">Cerrar</button>
             </div>
           </div>
         </div>
@@ -134,7 +155,7 @@ export default {
     async peticion() {
 
       try {
-        let Servidor = await axios.get('https://jsonplaceholder.typicode.com/users');
+        let Servidor = await axios.get(this.url);
 
         this.datos = Servidor.data;
         console.log(Servidor.data);
@@ -145,7 +166,7 @@ export default {
     },
     getUsers() {
       axios({
-        url: 'http://localhost:3000/posts',
+        url: this.api,
         method: 'GET'
       }).then((Respuesta) => {
         this.usuarios = Respuesta.data;
@@ -153,16 +174,65 @@ export default {
       })
         .catch((error) => console.log(error.message));
     },
-    Actualizacion() {
+    ListaOculta() {
       if (this.datos.length > 0) {
         this.datos = [];
       } else {
         this.peticion();
       }
     },
-    openModal() {
+    async edicion(id, title) {
+
+      try {
+        let request = {
+          "title" : title,
+          "active" : true
+        }
+        let response = await axios.put(`${this.api}/${id}`, request);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error al editar:', error.message);
+      }
+
+      this.getUsers();
+    },
+    async Borrar(id) {
+      try {
+        let response = await axios.delete(`${this.api}/${id}`);
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error al eliminar:', error.message);
+      }
+
+      this.getUsers();
+
+    },
+    openModal(index) {
       this.variable = 'editModal';
-      console.log(this.variable);
+      console.log(index);
+    },
+    async Crear() {
+      console.log(this.Tarea);
+
+      try {
+
+        let request = this.Tarea;
+
+        console.log(request);
+
+        let Servidor = await axios.post(this.api, request);
+
+        this.datos = Servidor.data;
+        console.log(Servidor.data);
+      } catch (error) {
+        console.log(error.message)
+      }
+
+      this.getUsers();
+      this.Tarea.title = '';
+    },
+    Actualizar() {
+      this.getUsers();
     }
 
   },
@@ -171,6 +241,12 @@ export default {
       datos: [],
       usuarios: [],
       variable: '',
+      Tarea: {
+        title: null,
+        active: true
+      },
+      url: 'https://jsonplaceholder.typicode.com/users',
+      api: 'http://localhost:3000/posts'
     }
   },
   mounted() {
