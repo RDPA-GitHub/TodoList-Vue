@@ -10,11 +10,6 @@
       </div>
     </div>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-      Activar Modal
-    </button>
-
     <div class="container">
       <div class="row mt-3  ">
         <div class="col-md-12 table-responsive">
