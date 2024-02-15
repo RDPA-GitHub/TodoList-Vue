@@ -93,36 +93,12 @@
 
       
       <div v-for="data in usuarios" :key="data.id">
-        <modal-editar :modalId="`editModal-${data.id}`" :taskId="data.id" :valueTask="data.title" @task-edited="getUsers" @close-modal="Actualizar" />
-        <!-- Modal Editar -->
-        <!-- <div class="modal fade" :id="`editModal-${index}`" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-          aria-labelledby="staticBackdropLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Editar</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="Actualizar()"></button>
-              </div>
-              <div class="modal-body">
-
-                <div class="d-flex justify-content-center">
-              <input placeholder="ingrese su tarea aquí" type="text" class="form-control w-50"
-                v-model="vEdit" />
-            </div>
-
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                @click="edicion(data.id, vEdit)">Editar</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="Actualizar()">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div> -->
-
         
-
-
+        <!-- Modal Editar -->
+        <modal-editar :modalId="`editModal-${data.id}`"
+         :taskId="data.id" :valueTask="data.title" 
+         @task-edited="getUsers" @close-modal="Actualizar" />
+        
         <!-- Modal Delete -->
         <div class="modal fade" :id="`deleteModal-${data.id}`" data-bs-backdrop="static" data-bs-keyboard="false"
           tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
