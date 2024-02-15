@@ -74,11 +74,11 @@
 
                 <td>
                   <button class="btn btn-outline-warning me-1 fw-bold" data-bs-toggle="modal"
-                    :data-bs-target="`#editModal-${index}`" @click="openModal(index)">
+                    :data-bs-target="`#editModal-${index}`" @click="openModal(value.title)">
                     Edit
                   </button>
                   <button class="btn btn-outline-danger ms-1 fw-bold" data-bs-toggle="modal"
-                    :data-bs-target="`#deleteModal-${index}`" @click="openModal(index)">
+                    :data-bs-target="`#deleteModal-${index}`" @click="openModal(value.title)">
                     Delete
                   </button>
                 </td>
@@ -105,14 +105,14 @@
 
               <div class="d-flex justify-content-center">
             <input placeholder="ingrese su tarea aquí" type="text" class="form-control w-50"
-              v-model="data.title" />
+              v-model="vEdit" />
           </div>
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="Actualizar()">Cerrar</button>
               <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                @click="edicion(data.id, data.title)">Editar</button>
+              @click="edicion(data.id, vEdit)">Editar</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" @click="Actualizar()">Cerrar</button>
             </div>
           </div>
         </div>
@@ -207,9 +207,10 @@ export default {
       this.getUsers();
 
     },
-    openModal(index) {
+    openModal(nuevaData) {
       this.variable = 'editModal';
-      console.log(index);
+      this.vEdit = nuevaData;
+      console.log(nuevaData);
     },
     async Crear() {
       console.log(this.Tarea);
@@ -241,6 +242,7 @@ export default {
       datos: [],
       usuarios: [],
       variable: '',
+      vEdit: null,
       Tarea: {
         title: null,
         active: true
