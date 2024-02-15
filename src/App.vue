@@ -128,7 +128,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="Actualizar()"></button>
             </div>
             <div class="modal-body text-center">
-              Estas seguro que quieres borrar <strong class="text-danger">"{{ data.title }}"</strong>?
+              Estás seguro que quieres borrar <strong class="text-danger">"{{ data.title }}"</strong>?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal" @click="Borrar(data.id)">Borrar</button>
