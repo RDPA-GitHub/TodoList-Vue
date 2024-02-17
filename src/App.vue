@@ -50,10 +50,10 @@
       </div>
 
       <!-- Listado de JSON Server -->
-      <div class="row mt-3  ">
-        <div class="col-md-12 table-responsive">
+      <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-md-12 table-responsive w-50">
           <table class="table table-dark table-striped">
-            <thead class="table-active">
+            <thead class="table-active tabla" >
               <tr class="text-center">
 
                 <th>No.</th>
@@ -200,5 +200,9 @@ export default {
 #app {
   color: rgb(56, 56, 56);
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.tabla {
+  border-radius: 1000px;
 }
 </style>
