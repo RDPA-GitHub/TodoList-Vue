@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       deleteTitle: this.valueTask,
+      api: 'http://localhost:3000/posts'
     };
   },
   methods: {
@@ -43,7 +44,7 @@ export default {
       } catch (error) {
         console.error('Error al eliminar:', error.message);
       }
-      this.$emit('task-edited');
+      this.$emit('task-deleted');
     },
     closeModal() {
       this.$emit('close-modal');

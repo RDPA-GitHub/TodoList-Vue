@@ -99,10 +99,10 @@
         @close-modal="Actualizar" />
 
       <!-- Modal Delete -->
-      <modal-borrar :modalId="`deleteModal-${data.id}`" :taskId="data.id" :valueTask="data.title" @task-edited="getUsers"
+      <modal-borrar :modalId="`deleteModal-${data.id}`" :taskId="data.id" :valueTask="data.title" @task-deleted="getUsers"
       @close-modal="Actualizar" />
 
-      <div class="modal fade" :id="`deleteModal-${data.id}`" data-bs-backdrop="static" data-bs-keyboard="false"
+      <!-- <div class="modal fade" :id="`deleteModal-${data.id}`" data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -122,7 +122,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
 
   </div>
@@ -170,17 +170,6 @@ export default {
       } else {
         this.peticion();
       }
-    },
-    async Borrar(id) {
-      try {
-        let response = await axios.delete(`${this.api}/${id}`);
-        console.log(JSON.stringify(response.data, undefined, 3));
-      } catch (error) {
-        console.error('Error al eliminar:', error.message);
-      }
-
-      this.Actualizar();
-
     },
     async Crear() {
       console.log(this.Tarea);
