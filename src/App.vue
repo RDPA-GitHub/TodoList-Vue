@@ -101,28 +101,6 @@
       <!-- Modal Delete -->
       <modal-borrar :modalId="`deleteModal-${data.id}`" :taskId="data.id" :valueTask="data.title" @task-deleted="getUsers"
       @close-modal="Actualizar" />
-
-      <!-- <div class="modal fade" :id="`deleteModal-${data.id}`" data-bs-backdrop="static" data-bs-keyboard="false"
-        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal Delete</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                @click="Actualizar()"></button>
-            </div>
-            <div class="modal-body text-center">
-              Estás seguro que quieres borrar <strong class="text-danger">"{{ data.title }}"</strong>?
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal"
-                @click="Borrar(data.id)">Borrar</button>
-              <button type="button" class="btn btn-secondary fw-bold" data-bs-dismiss="modal"
-                @click="Actualizar()">Cerrar</button>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
 
   </div>
