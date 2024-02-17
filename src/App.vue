@@ -123,7 +123,7 @@ export default {
     async peticion() {
 
       try {
-        let Servidor = await axios.get(this.url);
+        let Servidor = await axios.get(this.urls.jsonApi);
 
         this.datos = Servidor.data;
         console.log(Servidor.data);
@@ -134,7 +134,7 @@ export default {
     },
     getUsers() {
       axios({
-        url: this.api,
+        url: this.urls.severApi,
         method: 'GET'
       }).then((Respuesta) => {
         this.usuarios = Respuesta.data;
@@ -184,8 +184,10 @@ export default {
         title: null,
         active: true
       },
-      url: 'https://jsonplaceholder.typicode.com/users',
-      api: 'http://localhost:3000/posts'
+      urls: {
+        jsonApi: 'https://jsonplaceholder.typicode.com/users',
+        severApi: 'http://localhost:3000/posts'
+      }
     }
   },
   mounted() {
