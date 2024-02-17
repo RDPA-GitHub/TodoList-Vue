@@ -46,7 +46,7 @@ export default {
       } catch (error) {
         console.error('Error al editar:', error.message);
       }
-      this.$emit('task-edited');
+      this.$emit('task-deleted');
     },
     closeModal() {
       this.$emit('close-modal');
