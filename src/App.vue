@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
-      <Todo msg="Listados" />
+      <Todo :msg=  "cambio ?  'Listados JSON-Server' : 'Listados JSON-Placeholder & JSON-Server'" />
       <div class="d-flex align-items-center mt-2">
         <button title="Mostrando Usuarios Estáticos" class="ms-3"
           :class="['btn', datos.length > 0 ? 'btn-secondary' : 'btn-success', 'fw-bold']" @click="ListaOculta()">
@@ -16,7 +16,7 @@
         <div class="col-md-12">
 
           <div class="d-flex justify-content-center">
-            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-50"
+            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-25 text-center"
               v-model="Tarea.title" />
           </div>
 
@@ -144,9 +144,11 @@ export default {
     },
     ListaOculta() {
       if (this.datos.length > 0) {
+        this.cambio = !this.cambio;
         this.datos = [];
       } else {
         this.peticion();
+        this.cambio = !this.cambio;
       }
     },
     async Crear() {
@@ -158,12 +160,12 @@ export default {
 
         console.log(request);
 
-        let Servidor = await axios.post(this.api, request);
+        let Servidor = await axios.post(this.urls.severApi, request);
 
         this.datos = Servidor.data;
         console.log(JSON.stringify(this.datos, undefined, 3));
       } catch (error) {
-        console.log(error.message)
+        console.error(error.message)
       }
 
       this.getUsers();
@@ -178,6 +180,7 @@ export default {
     return {
       datos: [],
       usuarios: [],
+      cambio: true,
       vEdit: '',
       indice: '',
       Tarea: {

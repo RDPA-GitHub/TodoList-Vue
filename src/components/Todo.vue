@@ -1,7 +1,6 @@
 <template>
   <div class="text-center mt-4">
     <h1>{{ msg }}</h1>
-    
   </div>
 </template>
 
@@ -9,7 +8,10 @@
 export default {
   name: 'ToDo',
   props: {
-    msg: String
+    msg: {
+      type: String, 
+      required: true 
+    }
   }
 }
 </script>
