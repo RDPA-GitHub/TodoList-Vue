@@ -16,7 +16,7 @@
         <div class="col-md-12">
 
           <div class="d-flex justify-content-center">
-            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-25 text-center"
+            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-25 text-centergti "
               v-model="Tarea.title" />
           </div>
 
