@@ -11,7 +11,7 @@
             @click="closeModal"></button>
           </div>
           <div class="modal-body text-center">
-            Estás seguro que quieres borrar <strong class="text-danger">"{{ this.deleteTitle }}"</strong>?
+            Estás seguro que quieres borrar <strong class="text-danger">"{{ this.deleteTitle || 'Vacío'}}"</strong>?
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger fw-bold" data-bs-dismiss="modal"
@@ -40,7 +40,7 @@ export default {
     async DeleteTask() {
       try {
         let response = await axios.delete(`${this.api}/${this.taskId}`);
-        console.log(JSON.stringify(response.data, undefined, 3));
+        if(response.status == 200) console.log(  this.deleteTitle  + ' fue eliminado con exito!');
       } catch (error) {
         console.error('Error al eliminar:', error.message);
       }

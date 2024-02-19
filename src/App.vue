@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="d-flex justify-content-center">
-      <Todo :msg=  "cambio ?  'Listados JSON-Server' : 'Listados JSON-Placeholder & JSON-Server'" />
+      <Todo :msg="cambio ? 'Listados JSON-Server' : 'Listados JSON-Placeholder & JSON-Server'" />
       <div class="d-flex align-items-center mt-2">
         <button title="Mostrando Usuarios Estáticos" class="ms-3"
           :class="['btn', datos.length > 0 ? 'btn-secondary' : 'btn-success', 'fw-bold']" @click="ListaOculta()">
@@ -16,8 +16,8 @@
         <div class="col-md-12">
 
           <div class="d-flex justify-content-center">
-            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text" class="form-control w-25 text-centergti "
-              v-model="Tarea.title" />
+            <input @keyup.enter="Crear()" placeholder="ingrese su tarea aquí" type="text"
+              class="form-control w-25 text-center " v-model="Tarea.title" />
           </div>
 
         </div>
@@ -53,7 +53,7 @@
       <div class="row mt-3 d-flex justify-content-center">
         <div class="col-md-12 table-responsive w-50">
           <table class="table table-dark table-striped">
-            <thead class="table-active tabla" >
+            <thead class="table-active tabla">
               <tr class="text-center">
 
                 <th>No.</th>
@@ -67,7 +67,7 @@
               <tr class="text-center" v-for="(value, index) in usuarios" :key="index">
 
                 <td>{{ index + 1 }}</td>
-                <td>{{ value.title }}</td>
+                <td>{{ value.title || 'Vacío' }}</td>
                 <td :class="[value.active ? 'text-success fw-bold' : 'text-danger fw-bold']">
                   {{ value.active ? 'Activo' : 'Inactivo' }}
                 </td>
@@ -100,7 +100,7 @@
 
       <!-- Modal Delete -->
       <modal-borrar :modalId="`deleteModal-${data.id}`" :taskId="data.id" :valueTask="data.title" @task-deleted="getUsers"
-      @close-modal="Actualizar" />
+        @close-modal="Actualizar" />
     </div>
 
   </div>
@@ -126,7 +126,7 @@ export default {
         let Servidor = await axios.get(this.urls.jsonApi);
 
         this.datos = Servidor.data;
-        console.log(Servidor.data);
+        //console.log(Servidor.data);
       } catch (error) {
         console.log(error.message)
       }
@@ -138,7 +138,7 @@ export default {
         method: 'GET'
       }).then((Respuesta) => {
         this.usuarios = Respuesta.data;
-        console.log(JSON.stringify(this.usuarios, undefined, 3));
+        //console.log(JSON.stringify(this.usuarios, undefined, 3));
       })
         .catch((error) => console.log(error.message));
     },
@@ -148,24 +148,26 @@ export default {
         this.datos = [];
       } else {
         this.peticion();
-        this.cambio = !this.cambio;
+        this.datos.length ? this.cambio = !this.cambio : this.cambio;
       }
     },
     async Crear() {
-      console.log(this.Tarea);
+      console.log(this.Tarea.title);
+      if (this.Tarea.title != '') {
 
-      try {
+        try {
 
-        let request = this.Tarea;
+          let request = this.Tarea;
+          //console.log(request);
 
-        console.log(request);
+          let Servidor = await axios.post(this.urls.severApi, request);
 
-        let Servidor = await axios.post(this.urls.severApi, request);
+          this.datos = Servidor.data;
+          //console.log(JSON.stringify(this.datos, undefined, 3));
+        } catch (error) {
+          console.error(error.message)
+        }
 
-        this.datos = Servidor.data;
-        console.log(JSON.stringify(this.datos, undefined, 3));
-      } catch (error) {
-        console.error(error.message)
       }
 
       this.getUsers();
