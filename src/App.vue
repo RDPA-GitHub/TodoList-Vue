@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+
+    <div class="mt-4 d-flex justify-content-center">
+      <input @keyup.enter="filtrar()" placeholder="Inicie su busqueda" type="text" class="form-control w-25 text-center "
+        v-model="busqueda" />
+    </div>
+
     <div class="d-flex justify-content-center">
       <Todo :msg="cambio ? 'Listados JSON-Server' : 'Listados JSON-Placeholder & JSON-Server'" />
       <div class="d-flex align-items-center mt-2">
@@ -138,9 +144,9 @@ export default {
         method: 'GET'
       }).then((Respuesta) => {
         this.usuarios = Respuesta.data;
-        //console.log(JSON.stringify(this.usuarios, undefined, 3));
       })
         .catch((error) => console.log(error.message));
+      this.busqueda = null;
     },
     ListaOculta() {
       if (this.datos.length > 0) {
@@ -175,6 +181,12 @@ export default {
     },
     Actualizar() {
       this.getUsers();
+    },
+    filtrar() {
+      this.usuarios = this.usuarios.filter(usuario => {
+        return  usuario.title == (this.busqueda);
+      });
+      this.busqueda = null;
     }
 
   },
@@ -185,6 +197,10 @@ export default {
       cambio: true,
       vEdit: '',
       indice: '',
+      busqueda: null,
+      filters: {
+        usuarios: []
+      },
       Tarea: {
         title: null,
         active: true
@@ -197,6 +213,7 @@ export default {
   },
   mounted() {
     this.getUsers();
+    this.filtrar();
   }
 }
 </script>
