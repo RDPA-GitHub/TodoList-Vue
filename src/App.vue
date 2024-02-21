@@ -3,7 +3,7 @@
     <div class="d-flex justify-content-center">
       <Todo :msg="cambio ? 'Listados JSON-Server' : 'Listados JSON-Placeholder & JSON-Server'" />
       <div class="d-flex align-items-center mt-2">
-        <button title="Mostrando Usuarios Estáticos" class="ms-3"
+        <button title="Mostrando Usuarios Estáticos Json Placeholder" class="ms-3"
           :class="['btn', datos.length > 0 ? 'btn-secondary' : 'btn-success', 'fw-bold']" @click="ListaOculta()">
           ⚡
         </button>
