@@ -85,7 +85,7 @@
                   </button>
                   <button class="btn btn-outline-danger ms-1 fw-bold" data-bs-toggle="modal"
                     :data-bs-target="`#deleteModal-${value.id}`">
-                    Delete
+                    Borrar
                   </button>
                 </td>
 
