@@ -81,7 +81,7 @@
                 <td>
                   <button class="btn btn-outline-warning me-1 fw-bold" data-bs-toggle="modal"
                     :data-bs-target="`#editModal-${value.id}`">
-                    Edit
+                    Editar
                   </button>
                   <button class="btn btn-outline-danger ms-1 fw-bold" data-bs-toggle="modal"
                     :data-bs-target="`#deleteModal-${value.id}`">
